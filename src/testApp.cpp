@@ -33,7 +33,7 @@ void testApp::setup(){
     
     // for circle
     ofSetCircleResolution(100);
-    circRadius = 100;
+    circRadius = 10;
 }
 
 //--------------------------------------------------------------
@@ -65,7 +65,7 @@ void testApp::draw(){
     // from algo2013, sinExample CirclePlusPath
     float xorig = ofGetWidth()/2;
 	float yorig = ofGetHeight()/2;
-	float angle = ofGetElapsedTimef()*10;
+	float angle = ofGetElapsedTimef()*2;
 	
 	float x = xorig + circRadius * cos(angle);
 	float y = yorig + circRadius * -sin(angle);
@@ -76,16 +76,16 @@ void testApp::draw(){
     
     points.push_back(pitchTemp);
     circleRadius.push_back(vol);
-	if (points.size() > maxArray){
+	if (points.size() > 50){
 		points.erase(points.begin());
 	}
-    if (circleRadius.size() > maxArray) {
+    if (circleRadius.size() > 50) {
         circleRadius.erase(circleRadius.begin());
     }
     
     ofSetColor(255,255,255);
 	
-//    ofNoFill();
+    ofFill();
     ofBeginShape();
 	for (int i = 0; i < points.size(); i++){
 //		ofVertex(points[i].x, points[i].y);
