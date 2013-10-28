@@ -34,6 +34,7 @@ void testApp::setup(){
     // for circle
     ofSetCircleResolution(100);
     circRadius = 10;
+    maxArray = 300;
 }
 
 //--------------------------------------------------------------
@@ -63,6 +64,7 @@ void testApp::draw(){
     dinFont.drawString( "other amplitude is : " + ofToString(otherVol), 20,110);
    
     // from algo2013, sinExample CirclePlusPath
+    // my side
     float xorig = ofGetWidth()/2;
 	float yorig = ofGetHeight()/2;
 	float angle = ofGetElapsedTimef()*2;
@@ -76,22 +78,50 @@ void testApp::draw(){
     
     points.push_back(pitchTemp);
     circleRadius.push_back(vol);
-	if (points.size() > 50){
+	if (points.size() > maxArray){
 		points.erase(points.begin());
 	}
-    if (circleRadius.size() > 50) {
+    if (circleRadius.size() > maxArray) {
         circleRadius.erase(circleRadius.begin());
     }
     
-    ofSetColor(255,255,255);
+    ofSetColor(255,255,pitch/4);
 	
     ofFill();
     ofBeginShape();
 	for (int i = 0; i < points.size(); i++){
 //		ofVertex(points[i].x, points[i].y);
-        ofCircle(points[i].x, points[i].y, circleRadius[i]);
+        ofCircle(points[i].x, points[i].y, circleRadius[i]/2);
 	}
 	ofEndShape();
+    
+    // your side
+    float yX = xorig + otherPitch * cos(angle);
+    float yY = yorig + otherPitch * -sin(angle);
+    
+    ofPoint yourPitchTemp;
+    yourPitchTemp.x = yX;
+    yourPitchTemp.y = yY;
+    
+    yourPoints.push_back(yourPitchTemp);
+    yourCircleRadius.push_back(otherVol);
+    if (yourPoints.size() > 50) {
+        yourPoints.erase(yourPoints.begin());
+    }
+    if (yourCircleRadius.size() > 50) {
+        yourCircleRadius.erase(yourCircleRadius.begin());
+    }
+    
+    ofSetColor(otherPitch/4,255,255);
+	
+    ofFill();
+    ofBeginShape();
+	for (int i = 0; i < yourPoints.size(); i++){
+        //		ofVertex(points[i].x, points[i].y);
+        ofCircle(yourPoints[i].x, yourPoints[i].y, yourCircleRadius[i]/2);
+	}
+	ofEndShape();
+    
 }
 //--------------------------------------------------------------
 void testApp::onMessage( Spacebrew::Message & msg ){

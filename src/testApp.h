@@ -48,4 +48,7 @@ class testApp : public ofBaseApp{
     
         int maxArray;
     
+        vector <ofPoint> yourPoints;
+        vector <float> yourCircleRadius;
+    
 };
