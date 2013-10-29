@@ -5,7 +5,7 @@
 void testApp::setup(){
     ofSetVerticalSync(true);
    	ofBackground(0,0,0);
-    ofSetBackgroundAuto(false);
+    ofSetBackgroundAuto(true);
 	// setup of sound input
 	ofSoundStreamSetup(0, 2, this, 44100, 512, 4);
 	left = new float[512];
@@ -85,7 +85,7 @@ void testApp::draw(){
     dinFont.drawString( "other amplitude is : " + ofToString(otherVol), 20,110);
    
     // from algo2013, sinExample CirclePlusPath
-    // my side
+    // my side -------------------------------------------------------------- MY SIDE
     float xorig = ofGetWidth()/2;
 	float yorig = ofGetHeight()/2;
 	float angle = ofGetElapsedTimef()*2;
@@ -97,25 +97,29 @@ void testApp::draw(){
 	pitchTemp.x = x;
 	pitchTemp.y = y;
     
-    points.push_back(pitchTemp);
-    circleRadius.push_back(vol);
-	if (points.size() > maxArray){
-		points.erase(points.begin());
+    myPoints.push_back(pitchTemp);
+    myCircleRadius.push_back(vol);
+	if (myPoints.size() > maxArray){
+		myPoints.erase(myPoints.begin());
 	}
-    if (circleRadius.size() > maxArray) {
-        circleRadius.erase(circleRadius.begin());
+    if (myCircleRadius.size() > maxArray) {
+        myCircleRadius.erase(myCircleRadius.begin());
     }
 	
     ofFill();
     ofBeginShape();
-	for (int i = 0; i < points.size(); i++){
+	for (int i = 0; i < myPoints.size(); i++){
 //		ofVertex(points[i].x, points[i].y);
         ofSetColor(255,254,48,150);
-        ofCircle(points[i].x, points[i].y, circleRadius[i]/2);
+//        ofCircle(myPoints[i].x, myPoints[i].y, myCircleRadius[i]/2);
+        ofSetLineWidth(myCircleRadius[i]/8);
+        if(i > 1) {
+        ofLine(myPoints[i-1], myPoints[i]);
+        }
 	}
 	ofEndShape();
     
-    // your side
+    // your side -------------------------------------------------------------- YOUR SIDE
     float yX = xorig + otherPitch/3 * -cos(angle);
     float yY = yorig + otherPitch/3 * sin(angle);
     
@@ -135,12 +139,17 @@ void testApp::draw(){
     ofFill();
     ofBeginShape();
 	for (int i = 0; i < yourPoints.size(); i++){
-        //		ofVertex(points[i].x, points[i].y);
+        //	ofVertex(points[i].x, points[i].y);
         ofSetColor(255,22,68,150);
-        ofCircle(yourPoints[i].x, yourPoints[i].y, yourCircleRadius[i]/2);
+        ofSetLineWidth(yourCircleRadius[i]/8);
+        if(i > 1) {
+            ofLine(yourPoints[i-1], yourPoints[i]);
+        }
         newPos.set(yourPoints[i].x, yourPoints[i].y);
 	}
 	ofEndShape();
+    
+    // PARTICLE SYSTEM -------------------------------------------------------------- PARTICLE
     
     //drawParticle from Algo
     for( vector<Particle>::iterator it = pList.begin(); it!=pList.end(); it++){
@@ -173,15 +182,15 @@ void testApp::draw(){
         
     }
     
-    // check for proximity
-    for(int i=0; i < points.size(); i++) {
+    // check for proximity ---------------------------------------------------------------------
+    for(int i=0; i < myPoints.size(); i++) {
         for(int j=0; j < yourPoints.size(); j++) {
-            if(abs(ofDist(points[i].x, points[i].y, yourPoints[j].x, yourPoints[j].y)) <= 10) {
+            if(abs(ofDist(myPoints[i].x, myPoints[i].y, yourPoints[j].x, yourPoints[j].y)) <= 10) {
                 ofSetColor(255,255,255,100);
-                ofCircle(points[i].x, points[i].y, circleRadius[i]/2);
-                ofCircle(yourPoints[i].x, yourPoints[i].y, yourCircleRadius[i]/2);
-                float noise = ofNoise(points[i].x * 0.005, points[i].y * 0.005, ofGetElapsedTimef() * 0.1) * 15.0;
-                points[i] += ofVec2f(cos(noise), sin(noise))/ ofRandom(4,10);
+                ofCircle(myPoints[i].x, myPoints[i].y, myCircleRadius[i]/8);
+                ofCircle(yourPoints[i].x, yourPoints[i].y, yourCircleRadius[i]/8);
+                float noise = ofNoise(myPoints[i].x * 0.005, myPoints[i].y * 0.005, ofGetElapsedTimef() * 0.1) * 15.0;
+                myPoints[i] += ofVec2f(cos(noise), sin(noise))/ ofRandom(4,10);
                 yourPoints[i] += ofVec2f(cos(noise), sin(noise))/ ofRandom(4,10);
             }
         }

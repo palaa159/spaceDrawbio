@@ -42,11 +42,10 @@ class testApp : public ofBaseApp{
         int otherPitch;
         int otherRadius;
     
-        vector <ofPoint> points;
-        vector <float> circleRadius;
+        vector <ofPoint> myPoints;
+        vector <float> myCircleRadius;
         float circRadius;
         float dotRadius;
-    
         int maxArray;
     
         vector <ofPoint> yourPoints;
