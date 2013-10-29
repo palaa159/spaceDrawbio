@@ -49,7 +49,8 @@ void testApp::update(){
     
 //    pitch = 0.05*AA.pitch + 0.95*pitch;
     vol = (int)(0.05* AA.amplitude * 10000) + (int)(0.95*(0));
-    pitch = 0.05*AA.pitch + 0.95*pitch;
+    pitch = 0.05*AA.pitch + 0.85*pitch + 0.1*300;
+    
     
     if( spacebrew.isConnected()){
         spacebrew.sendRange("SpaceAubio_pitch_send", pitch);
@@ -88,7 +89,7 @@ void testApp::draw(){
     // my side -------------------------------------------------------------- MY SIDE
     float xorig = ofGetWidth()/2;
 	float yorig = ofGetHeight()/2;
-	float angle = ofGetElapsedTimef()*2;
+	float angle = ofGetElapsedTimef()*5;
 	
 	float x = xorig + circRadius * cos(angle);
 	float y = yorig + circRadius * -sin(angle);
@@ -142,7 +143,7 @@ void testApp::draw(){
 	for (int i = 0; i < yourPoints.size(); i++){
         //	ofVertex(points[i].x, points[i].y);
         int yourC = ofMap(yourCircleRadius[i], 0, 70, 0, 255);
-        ofSetColor(yourC,208,208,150);
+        ofSetColor(yourC,80,208,150);
         ofSetLineWidth(yourCircleRadius[i]/8);
         if(i > 1) {
             ofLine(yourPoints[i-1], yourPoints[i]);
@@ -189,8 +190,8 @@ void testApp::draw(){
         for(int j=0; j < yourPoints.size(); j++) {
             if(abs(ofDist(myPoints[i].x, myPoints[i].y, yourPoints[j].x, yourPoints[j].y)) <= 10) {
                 ofSetColor(255,255,255,150);
-                ofCircle(myPoints[i].x, myPoints[i].y, myCircleRadius[i]/8);
-                ofCircle(yourPoints[i].x, yourPoints[i].y, yourCircleRadius[i]/8);
+                ofCircle(myPoints[i].x, myPoints[i].y, myCircleRadius[i]/6);
+                ofCircle(yourPoints[i].x, yourPoints[i].y, yourCircleRadius[i]/6);
                 float noise = ofNoise(myPoints[i].x * 0.005, myPoints[i].y * 0.005, ofGetElapsedTimef() * 0.1) * 15.0;
                 myPoints[i] += ofVec2f(cos(noise), sin(noise))/ ofRandom(4,10);
                 yourPoints[i] += ofVec2f(cos(noise), sin(noise))/ ofRandom(4,10);
