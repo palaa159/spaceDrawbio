@@ -1,14 +1,24 @@
 //
 //  Particle.h
-//  spaceAubio
+//  NoiseParticles
 //
-//  Created by Alexandra Samuel on 10/28/13.
+//  Created by Charlie Whitney on 9/18/13.
 //
 //
 
-#ifndef __spaceAubio__Particle__
-#define __spaceAubio__Particle__
+#pragma once
 
-#include <iostream>
+#include "ofMain.h"
 
-#endif /* defined(__spaceAubio__Particle__) */
+class Particle {
+public:
+    Particle(){};
+    void setup( ofVec2f rVel, ofVec2f newPos );
+    void update();
+    void draw();
+    
+    ofVec2f pos;
+    ofVec2f vel;
+    int age, lifespan;
+    bool bIsDead;
+};

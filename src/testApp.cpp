@@ -34,6 +34,13 @@ void testApp::setup(){
     ofSetCircleResolution(100);
     circRadius = 10;
     maxArray = 300;
+    
+    //create particles (adapted from Algo)
+    newPos.set(0,0);
+    // make 50 particles up front!
+    for( int i=0; i<50; i++ ){
+        addParticle(newPos);
+    }
 }
 
 //--------------------------------------------------------------
@@ -51,6 +58,19 @@ void testApp::update(){
     circRadius = pitch/3;
     dotRadius = vol;
     
+    
+    //Loop through and delete a particle using iterators and vectors (from Algo)
+
+    for( vector<Particle>::iterator it=pList.begin(); it!=pList.end(); ){
+        it->update();
+        
+        if( it->bIsDead ){
+            it = pList.erase(it);   // When we erase one, it returns the next particle automatically.  It's done the "it++" for us!
+            ofLog( OF_LOG_NOTICE, "size is " + ofToString(pList.size()) );
+        }else {
+            it++;
+        }
+    }
 }
 
 //--------------------------------------------------------------
@@ -117,8 +137,14 @@ void testApp::draw(){
         //		ofVertex(points[i].x, points[i].y);
         ofSetColor(255,22,68,150);
         ofCircle(yourPoints[i].x, yourPoints[i].y, yourCircleRadius[i]/2);
+        newPos.set(yourPoints[i].x, yourPoints[i].y);
 	}
 	ofEndShape();
+    
+    //drawParticle from Algo
+    for( vector<Particle>::iterator it = pList.begin(); it!=pList.end(); it++){
+        it->draw();
+    }
     
     // record time when pitches match
     if (abs(pitch-otherPitch) >= 10 && abs(pitch-otherPitch) <= 40) {
@@ -130,10 +156,32 @@ void testApp::draw(){
         timer = 0;
     }
     
-    if(timer == 20){
+    if(timer >= 10 && timer <= 12){
         cout << "EXPLODE" << endl;
+        cout << "newPos is: " << newPos << endl;
+        
+        for( int i=0; i<60; i++ ){
+            newPos.set(x, y);
+            addParticle(newPos);
+        }
+        
     }
+    
+
+    
+
 }
+
+//--------------------------------------------------------------
+void testApp::addParticle(ofVec2f currentPos){
+    
+    // we'll pick a random direction for our particle to move initially
+    rVel = ofVec2f( ofRandom(1.0), ofRandom(1.0) ) * 10.0 - 5.0;
+    newPos = currentPos;
+    p.setup( rVel, newPos );
+    pList.push_back( p );
+}
+
 //--------------------------------------------------------------
 void testApp::onMessage( Spacebrew::Message & msg ){
     if(msg.name == "SpaceAubio_pitch_receive") {
@@ -183,7 +231,8 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-    
+    // add 60 more particles on click!
+
 }
 
 //--------------------------------------------------------------

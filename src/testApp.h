@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxSpacebrew.h"
 #include "ofxAubioAnalyzer.h"
+#include "Particle.h"
 
 class testApp : public ofBaseApp{
 
@@ -51,6 +52,13 @@ class testApp : public ofBaseApp{
         vector <ofPoint> yourPoints;
         vector <float> yourCircleRadius;
     
-    float timer;
+        float timer;
+    
+        void addParticle( ofVec2f currentPos);
+        vector<Particle> pList;
+    
+        Particle p;
+        ofVec2f newPos;
+        ofVec2f rVel;
     
 };
