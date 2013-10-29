@@ -121,19 +121,24 @@ void testApp::draw(){
 	ofEndShape();
     
     // record time when pitches match
-    if (abs(pitch-otherPitch) >= 10 && abs(pitch-otherPitch) <= 20) {
-        timer = ofGetElapsedTimef();
+    if (abs(pitch-otherPitch) >= 10 && abs(pitch-otherPitch) <= 40) {
+        timer++;
         ofSetColor(255,22,68);
         dinFont.drawString( "MATCHING: " + ofToString(timer), 20,130);
+        
     } else {
         timer = 0;
+    }
+    
+    if(timer == 20){
+        cout << "EXPLODE" << endl;
     }
 }
 //--------------------------------------------------------------
 void testApp::onMessage( Spacebrew::Message & msg ){
     if(msg.name == "SpaceAubio_pitch_receive") {
         otherPitch = ofToInt(msg.value);
-        cout << "other pitch is" << otherPitch << endl;
+        //cout << "other pitch is" << otherPitch << endl;
     }
     if(msg.name == "SpaceAubio_volume_receive") {
         otherVol = ofToInt(msg.value);
