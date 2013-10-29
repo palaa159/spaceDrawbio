@@ -84,20 +84,19 @@ void testApp::draw(){
     if (circleRadius.size() > maxArray) {
         circleRadius.erase(circleRadius.begin());
     }
-    
-    ofSetColor(255,255,pitch/4);
 	
     ofFill();
     ofBeginShape();
 	for (int i = 0; i < points.size(); i++){
 //		ofVertex(points[i].x, points[i].y);
+        ofSetColor(255,255,pitch/4);
         ofCircle(points[i].x, points[i].y, circleRadius[i]/2);
 	}
 	ofEndShape();
     
     // your side
-    float yX = xorig + otherPitch * cos(angle);
-    float yY = yorig + otherPitch * -sin(angle);
+    float yX = xorig + otherPitch/3 * -cos(angle);
+    float yY = yorig + otherPitch/3 * sin(angle);
     
     ofPoint yourPitchTemp;
     yourPitchTemp.x = yX;
@@ -105,19 +104,18 @@ void testApp::draw(){
     
     yourPoints.push_back(yourPitchTemp);
     yourCircleRadius.push_back(otherVol);
-    if (yourPoints.size() > 50) {
+    if (yourPoints.size() > maxArray) {
         yourPoints.erase(yourPoints.begin());
     }
-    if (yourCircleRadius.size() > 50) {
+    if (yourCircleRadius.size() > maxArray) {
         yourCircleRadius.erase(yourCircleRadius.begin());
     }
-    
-    ofSetColor(otherPitch/4,255,255);
 	
     ofFill();
     ofBeginShape();
 	for (int i = 0; i < yourPoints.size(); i++){
         //		ofVertex(points[i].x, points[i].y);
+        ofSetColor(otherPitch/4,255,255);
         ofCircle(yourPoints[i].x, yourPoints[i].y, yourCircleRadius[i]/2);
 	}
 	ofEndShape();
