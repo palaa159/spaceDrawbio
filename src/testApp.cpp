@@ -5,6 +5,7 @@
 void testApp::setup(){
     ofSetVerticalSync(true);
    	ofBackground(0,0,0);
+    ofSetBackgroundAuto(false);
 	// setup of sound input
 	ofSoundStreamSetup(0, 2, this, 44100, 512, 4);
 	left = new float[512];
@@ -164,6 +165,11 @@ void testApp::draw(){
             newPos.set(x, y);
             addParticle(newPos);
         }
+        // explode dots away
+//        for(int i=0; i < points.size();i++) {
+//            float noise = ofNoise(points[i].x * 0.005, points[i].y * 0.005, ofGetElapsedTimef() * 0.1) * 15.0;
+//            points[i] += ofVec2f(cos(noise), sin(noise))/2;
+//        }
         
     }
     
@@ -175,12 +181,13 @@ void testApp::draw(){
                 ofCircle(points[i].x, points[i].y, circleRadius[i]/2);
                 ofCircle(yourPoints[i].x, yourPoints[i].y, yourCircleRadius[i]/2);
                 float noise = ofNoise(points[i].x * 0.005, points[i].y * 0.005, ofGetElapsedTimef() * 0.1) * 15.0;
-                points[i] += ofVec2f(cos(noise), sin(noise))/4;
-                yourPoints[i] += ofVec2f(cos(noise), sin(noise))/4;
+                points[i] += ofVec2f(cos(noise), sin(noise))/ ofRandom(4,10);
+                yourPoints[i] += ofVec2f(cos(noise), sin(noise))/ ofRandom(4,10);
             }
         }
     } 
-    
+    ofSetColor(0, 0, 0, 10);
+    ofRect(0,0,ofGetWidth(),ofGetHeight());
 
 }
 
