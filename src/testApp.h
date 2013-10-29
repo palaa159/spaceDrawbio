@@ -51,4 +51,6 @@ class testApp : public ofBaseApp{
         vector <ofPoint> yourPoints;
         vector <float> yourCircleRadius;
     
+    float timer;
+    
 };

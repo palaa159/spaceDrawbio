@@ -5,7 +5,6 @@
 void testApp::setup(){
     ofSetVerticalSync(true);
    	ofBackground(0,0,0);
-	
 	// setup of sound input
 	ofSoundStreamSetup(0, 2, this, 44100, 512, 4);
 	left = new float[512];
@@ -56,6 +55,7 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
+    ofEnableAlphaBlending();
 	// draw pitch and vol text
 	ofSetColor(255,255,255);
 	dinFont.drawString( "pitch is : " + ofToString((int)pitch), 20,50);
@@ -84,20 +84,19 @@ void testApp::draw(){
     if (circleRadius.size() > maxArray) {
         circleRadius.erase(circleRadius.begin());
     }
-    
-    ofSetColor(255,255,pitch/4);
 	
     ofFill();
     ofBeginShape();
 	for (int i = 0; i < points.size(); i++){
 //		ofVertex(points[i].x, points[i].y);
+        ofSetColor(255,254,48,150);
         ofCircle(points[i].x, points[i].y, circleRadius[i]/2);
 	}
 	ofEndShape();
     
     // your side
-    float yX = xorig + otherPitch * cos(angle);
-    float yY = yorig + otherPitch * -sin(angle);
+    float yX = xorig + otherPitch/3 * -cos(angle);
+    float yY = yorig + otherPitch/3 * sin(angle);
     
     ofPoint yourPitchTemp;
     yourPitchTemp.x = yX;
@@ -105,23 +104,30 @@ void testApp::draw(){
     
     yourPoints.push_back(yourPitchTemp);
     yourCircleRadius.push_back(otherVol);
-    if (yourPoints.size() > 50) {
+    if (yourPoints.size() > maxArray) {
         yourPoints.erase(yourPoints.begin());
     }
-    if (yourCircleRadius.size() > 50) {
+    if (yourCircleRadius.size() > maxArray) {
         yourCircleRadius.erase(yourCircleRadius.begin());
     }
-    
-    ofSetColor(otherPitch/4,255,255);
 	
     ofFill();
     ofBeginShape();
 	for (int i = 0; i < yourPoints.size(); i++){
         //		ofVertex(points[i].x, points[i].y);
+        ofSetColor(255,22,68,150);
         ofCircle(yourPoints[i].x, yourPoints[i].y, yourCircleRadius[i]/2);
 	}
 	ofEndShape();
     
+    // record time when pitches match
+    if (abs(pitch-otherPitch) >= 10 && abs(pitch-otherPitch) <= 20) {
+        timer = ofGetElapsedTimef();
+        ofSetColor(255,22,68);
+        dinFont.drawString( "MATCHING: " + ofToString(timer), 20,130);
+    } else {
+        timer = 0;
+    }
 }
 //--------------------------------------------------------------
 void testApp::onMessage( Spacebrew::Message & msg ){
