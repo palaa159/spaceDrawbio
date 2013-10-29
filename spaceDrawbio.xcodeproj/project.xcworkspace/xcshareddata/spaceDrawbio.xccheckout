@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F7E66BE7-2C36-4C33-905E-4AEE1A6CB6B9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>spaceDrawbio</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3FC1B2D6-1406-4C40-A649-423FDD64F4C5</key>
+		<string>https://github.com/palaa159/ofxLibwebsockets.git</string>
+		<key>585A1C6A-C126-4A68-A1E7-4575A0A9F92E</key>
+		<string>https://github.com/palaa159/spaceDrawbio.git</string>
+		<key>7C9A8428-F52D-485A-9B29-B375442EDADD</key>
+		<string>https://github.com/palaa159/ofxSpacebrew.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>spaceDrawbio.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3FC1B2D6-1406-4C40-A649-423FDD64F4C5</key>
+		<string>../../../../../addons/ofxLibwebsockets</string>
+		<key>585A1C6A-C126-4A68-A1E7-4575A0A9F92E</key>
+		<string>../..</string>
+		<key>7C9A8428-F52D-485A-9B29-B375442EDADD</key>
+		<string>../../../../../addons/ofxSpacebrew</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/palaa159/spaceDrawbio.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>585A1C6A-C126-4A68-A1E7-4575A0A9F92E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3FC1B2D6-1406-4C40-A649-423FDD64F4C5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxLibwebsockets</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7C9A8428-F52D-485A-9B29-B375442EDADD</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxSpacebrew</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>585A1C6A-C126-4A68-A1E7-4575A0A9F92E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>spaceDrawbio</string>
+		</dict>
+	</array>
+</dict>
+</plist>
