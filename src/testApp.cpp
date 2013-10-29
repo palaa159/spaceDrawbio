@@ -110,7 +110,8 @@ void testApp::draw(){
     ofBeginShape();
 	for (int i = 0; i < myPoints.size(); i++){
 //		ofVertex(points[i].x, points[i].y);
-        ofSetColor(255,254,48,150);
+        int myC = ofMap(myCircleRadius[i], 0, 70, 0, 255);
+        ofSetColor(255,myC,48,150);
 //        ofCircle(myPoints[i].x, myPoints[i].y, myCircleRadius[i]/2);
         ofSetLineWidth(myCircleRadius[i]/8);
         if(i > 1) {
@@ -140,7 +141,8 @@ void testApp::draw(){
     ofBeginShape();
 	for (int i = 0; i < yourPoints.size(); i++){
         //	ofVertex(points[i].x, points[i].y);
-        ofSetColor(255,22,68,150);
+        int yourC = ofMap(yourCircleRadius[i], 0, 70, 0, 255);
+        ofSetColor(yourC,208,208,150);
         ofSetLineWidth(yourCircleRadius[i]/8);
         if(i > 1) {
             ofLine(yourPoints[i-1], yourPoints[i]);
@@ -150,7 +152,7 @@ void testApp::draw(){
 	ofEndShape();
     
     // PARTICLE SYSTEM -------------------------------------------------------------- PARTICLE
-    
+    ofSetColor(255,255,255, 200);
     //drawParticle from Algo
     for( vector<Particle>::iterator it = pList.begin(); it!=pList.end(); it++){
         it->draw();
@@ -186,7 +188,7 @@ void testApp::draw(){
     for(int i=0; i < myPoints.size(); i++) {
         for(int j=0; j < yourPoints.size(); j++) {
             if(abs(ofDist(myPoints[i].x, myPoints[i].y, yourPoints[j].x, yourPoints[j].y)) <= 10) {
-                ofSetColor(255,255,255,100);
+                ofSetColor(255,255,255,150);
                 ofCircle(myPoints[i].x, myPoints[i].y, myCircleRadius[i]/8);
                 ofCircle(yourPoints[i].x, yourPoints[i].y, yourCircleRadius[i]/8);
                 float noise = ofNoise(myPoints[i].x * 0.005, myPoints[i].y * 0.005, ofGetElapsedTimef() * 0.1) * 15.0;
