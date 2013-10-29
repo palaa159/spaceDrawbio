@@ -17,7 +17,7 @@ void testApp::setup(){
     
     // spacebrew setup
     string host = "75.101.237.143"; // "localhost";
-    string name =  "Space Aubio At New York";
+    string name =  "Space Aubio Apon";
     string description =  "thisIsJustATest";
     spacebrew.addPublish("SpaceAubio_pitch_send", "range");
     spacebrew.addPublish("SpaceAubio_volume_send", "range");
@@ -72,7 +72,7 @@ void testApp::draw(){
 	float x = xorig + circRadius * cos(angle);
 	float y = yorig + circRadius * -sin(angle);
     
-    ofPoint pitchTemp;
+    ofVec2f pitchTemp;
 	pitchTemp.x = x;
 	pitchTemp.y = y;
     
@@ -98,7 +98,7 @@ void testApp::draw(){
     float yX = xorig + otherPitch/3 * -cos(angle);
     float yY = yorig + otherPitch/3 * sin(angle);
     
-    ofPoint yourPitchTemp;
+    ofVec2f yourPitchTemp;
     yourPitchTemp.x = yX;
     yourPitchTemp.y = yY;
     
@@ -133,6 +133,20 @@ void testApp::draw(){
     if(timer == 20){
         cout << "EXPLODE" << endl;
     }
+    
+    // check for proximity
+    for(int i=0; i < points.size(); i++) {
+        for(int j=0; j < yourPoints.size(); j++) {
+            if(abs(ofDist(points[i].x, points[i].y, yourPoints[j].x, yourPoints[j].y)) <= 10) {
+                ofSetColor(255,255,255,100);
+                ofCircle(points[i].x, points[i].y, circleRadius[i]/2);
+                ofCircle(yourPoints[i].x, yourPoints[i].y, yourCircleRadius[i]/2);
+                float noise = ofNoise(points[i].x * 0.005, points[i].y * 0.005, ofGetElapsedTimef() * 0.1) * 15.0;
+                points[i].x += ofNoise(noise);
+                points[i].y += ofNoise(noise);
+            }
+        }
+    } 
 }
 //--------------------------------------------------------------
 void testApp::onMessage( Spacebrew::Message & msg ){
@@ -144,7 +158,6 @@ void testApp::onMessage( Spacebrew::Message & msg ){
         otherVol = ofToInt(msg.value);
     }
 }
-
 
 //--------------------------------------------------------------
 
