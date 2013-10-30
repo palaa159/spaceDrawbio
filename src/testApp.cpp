@@ -37,9 +37,12 @@ void testApp::setup(){
     ofSetCircleResolution(100);
     circRadius = 10;
     maxArray = 300;
+
+    //nyc.loadImage("taxi.bmp");
+    //sgh.loadImage("panda.bmp");
+    nyc.loadImage("hello.bmp");
+    sgh.loadImage("nihao.bmp");
     
-    nyc.loadImage("hiapon.bmp");
-    sgh.loadImage("alex.bmp");
     newPos.set(ofGetWidth()/2, ofGetHeight()/2);
 
     ofEnableAlphaBlending();
@@ -180,8 +183,9 @@ void testApp::draw(){
     
     if(timer > 10 && timer < 12){
         cout << "EXPLODE" << endl;
-        cout << "newPos is: " << newPos << endl;
-        addParticle(ofRandom(0, 1));
+        //cout << "newPos is: " << newPos << endl;
+        num = ofRandom(0,2);
+        addParticle(num);
     }
     
     if( bIsDead ){
@@ -209,8 +213,9 @@ void testApp::draw(){
 //--------------------------------------------------------------
 void testApp::addParticle(int num){
     
-if(num > 0){
-    ofPixels pix = sgh.getPixelsRef();
+    //draw NYC symbol
+if(num == 0){
+    ofPixels pix = nyc.getPixelsRef();
     for(int y=0; y<pix.getHeight(); y++)
     {
         for(int x=0; x<pix.getWidth(); x++)
@@ -229,9 +234,11 @@ if(num > 0){
     }
 triggerParticleSwarm = true;
    
-}else{
+}
+   //draw SGH symbol
+if(num == 1){
     
-    ofPixels pix = nyc.getPixelsRef();
+    ofPixels pix = sgh.getPixelsRef();
     for(int y=0; y<pix.getHeight(); y++)
     {
         for(int x=0; x<pix.getWidth(); x++)
