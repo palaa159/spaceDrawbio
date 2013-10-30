@@ -177,12 +177,6 @@ void testApp::draw(){
             newPos.set(x, y);
             addParticle(newPos);
         }
-        // explode dots away
-//        for(int i=0; i < points.size();i++) {
-//            float noise = ofNoise(points[i].x * 0.005, points[i].y * 0.005, ofGetElapsedTimef() * 0.1) * 15.0;
-//            points[i] += ofVec2f(cos(noise), sin(noise))/2;
-//        }
-        
     }
     
     // check for proximity ---------------------------------------------------------------------
