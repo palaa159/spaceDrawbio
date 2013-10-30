@@ -1,9 +1,9 @@
 //
-//  Particle.cpp
-//  algo_week_09_02_animation
+//  ParticleSwarm.cpp
+//  SpaceDrawbio
 //
-//  Created by Bernardo Santos Schorr on 10/28/13.
-//  (edited for personal use by Alex Samuel on 10/29/13)
+//  Initial swarm inspired by Bernardo Schorr.
+//  Initial particle system inspired by Charley Whitney.
 //
 //
 
