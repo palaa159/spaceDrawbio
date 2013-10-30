@@ -6,6 +6,7 @@ void testApp::setup(){
     ofSetVerticalSync(true);
    	ofBackground(0,0,0);
     ofSetBackgroundAuto(true);
+    
 	// setup of sound input
 	ofSoundStreamSetup(0, 2, this, 44100, 512, 4);
 	left = new float[512];
@@ -26,6 +27,7 @@ void testApp::setup(){
     spacebrew.addSubscribe("SpaceAubio_volume_receive", "range");
     spacebrew.connect( host, name, description );
     Spacebrew::addListener(this, spacebrew);
+    
     // background
     bBackgroundOn   = false;
     otherPitch = 0;
@@ -36,18 +38,17 @@ void testApp::setup(){
     circRadius = 10;
     maxArray = 300;
     
-    //create particles (adapted from Algo)
-    newPos.set(0,0);
-    // make 50 particles up front!
-    for( int i=0; i<50; i++ ){
-        addParticle(newPos);
-    }
+    nyc.loadImage("hiapon.bmp");
+    sgh.loadImage("alex.bmp");
+    newPos.set(ofGetWidth()/2, ofGetHeight()/2);
+
+    ofEnableAlphaBlending();
+    
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
     
-//    pitch = 0.05*AA.pitch + 0.95*pitch;
     vol = (int)(0.05* AA.amplitude * 10000) + (int)(0.95*(0));
     pitch = 0.05*AA.pitch + 0.95*pitch;
     
@@ -61,15 +62,22 @@ void testApp::update(){
     
     
     //Loop through and delete a particle using iterators and vectors (from Algo)
-
-    for( vector<Particle>::iterator it=pList.begin(); it!=pList.end(); ){
-        it->update();
+    for( vector<ParticleSwarm>::iterator it=particleList.begin(); it!=particleList.end(); ){
+        it->dissolve();
         
         if( it->bIsDead ){
-            it = pList.erase(it);   // When we erase one, it returns the next particle automatically.  It's done the "it++" for us!
-            ofLog( OF_LOG_NOTICE, "size is " + ofToString(pList.size()) );
+            it = particleList.erase(it);
         }else {
             it++;
+        }
+    }
+    
+
+    
+    //if triggerParticleSwarm is true, update the locations
+    if (triggerParticleSwarm) {
+        for (int i = 0; i < particleList.size(); i++) {
+            particleList[i].update(i, countOne, countTwo);
         }
     }
 }
@@ -151,13 +159,11 @@ void testApp::draw(){
 	}
 	ofEndShape();
     
+    
+    
     // PARTICLE SYSTEM -------------------------------------------------------------- PARTICLE
     ofSetColor(255,255,255, 200);
-    //drawParticle from Algo
-    for( vector<Particle>::iterator it = pList.begin(); it!=pList.end(); it++){
-        it->draw();
-    }
-    
+
     // record time when pitches match
     if (abs(pitch-otherPitch) >= 10 && abs(pitch-otherPitch) <= 40) {
         timer++;
@@ -168,20 +174,18 @@ void testApp::draw(){
         timer = 0;
     }
     
-    if(timer >= 10 && timer <= 12){
+    for (int i = 0; i < particleList.size(); i++) {
+        particleList[i].draw();
+        }
+    
+    if(timer > 10 && timer < 12){
         cout << "EXPLODE" << endl;
         cout << "newPos is: " << newPos << endl;
-        
-        for( int i=0; i<60; i++ ){
-            newPos.set(x, y);
-            addParticle(newPos);
-        }
-        // explode dots away
-//        for(int i=0; i < points.size();i++) {
-//            float noise = ofNoise(points[i].x * 0.005, points[i].y * 0.005, ofGetElapsedTimef() * 0.1) * 15.0;
-//            points[i] += ofVec2f(cos(noise), sin(noise))/2;
-//        }
-        
+        addParticle(ofRandom(0, 1));
+    }
+    
+    if( bIsDead ){
+        return;
     }
     
     // check for proximity ---------------------------------------------------------------------
@@ -203,13 +207,51 @@ void testApp::draw(){
 }
 
 //--------------------------------------------------------------
-void testApp::addParticle(ofVec2f currentPos){
+void testApp::addParticle(int num){
     
-    // we'll pick a random direction for our particle to move initially
-    rVel = ofVec2f( ofRandom(1.0), ofRandom(1.0) ) * 10.0 - 5.0;
-    newPos = currentPos;
-    p.setup( rVel, newPos );
-    pList.push_back( p );
+if(num > 0){
+    ofPixels pix = sgh.getPixelsRef();
+    for(int y=0; y<pix.getHeight(); y++)
+    {
+        for(int x=0; x<pix.getWidth(); x++)
+        {
+            ofColor c = pix.getColor(x, y);
+            if(c.getBrightness() < 255)
+            {
+                ParticleSwarm p;
+                ofVec2f pos = newPos;
+                ofVec2f dest = ofVec2f (newPos.x + x, newPos.y + y);
+                p.setup(pos, dest);
+                particleList.push_back(p);
+                
+            }
+        }
+    }
+triggerParticleSwarm = true;
+   
+}else{
+    
+    ofPixels pix = nyc.getPixelsRef();
+    for(int y=0; y<pix.getHeight(); y++)
+    {
+        for(int x=0; x<pix.getWidth(); x++)
+        {
+            ofColor c = pix.getColor(x, y);
+            if(c.getBrightness() < 255)
+            {
+                ParticleSwarm p;
+                ofVec2f pos = newPos;
+                ofVec2f dest = ofVec2f (newPos.x + x, newPos.y + y);
+                p.setup(pos, dest);
+                particleList.push_back(p);
+                
+            }
+        }
+    }
+    
+    triggerParticleSwarm = true;
+}
+    
 }
 
 //--------------------------------------------------------------
@@ -260,13 +302,12 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-    // add 60 more particles on click!
 
 }
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-    
+
 }
 
 //--------------------------------------------------------------

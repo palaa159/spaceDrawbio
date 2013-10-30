@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxSpacebrew.h"
 #include "ofxAubioAnalyzer.h"
-#include "Particle.h"
+#include "ParticleSwarm.h"
 
 class testApp : public ofBaseApp{
 
@@ -53,11 +53,18 @@ class testApp : public ofBaseApp{
     
         float timer;
     
-        void addParticle( ofVec2f currentPos);
-        vector<Particle> pList;
+        void addParticle(int num);
     
-        Particle p;
         ofVec2f newPos;
         ofVec2f rVel;
+        vector <ParticleSwarm> particleList;
+        ofImage nyc;
+        ofImage sgh;
+        int num;
+        int countOne, countTwo, countToRetrigger;
+        bool triggerParticleSwarm;
+        bool bIsDead;
+    
+    
     
 };
