@@ -47,6 +47,8 @@ void testApp::setup(){
 
     ofEnableAlphaBlending();
     
+    snapCounter = 0;
+    
 }
 
 //--------------------------------------------------------------
@@ -309,6 +311,10 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
+    
+    saveScreen.grabScreen(0,0,1024,768);
+    saveScreen.saveImage("partOfTheScreen-"+ofToString(snapCounter)+".png");
+    snapCounter++;
 
 }
 

@@ -65,6 +65,9 @@ class testApp : public ofBaseApp{
         bool triggerParticleSwarm;
         bool bIsDead;
     
+        ofImage saveScreen;
+        int snapCounter;
+    
     
     
 };
